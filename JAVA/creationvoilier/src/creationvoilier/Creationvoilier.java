@@ -5,6 +5,9 @@
  */
 package creationvoilier;
 
+import creationvoilier.gui.CreationVoilier;
+import javax.swing.JFrame;
+
 /**
  *
  * @author david
@@ -15,7 +18,9 @@ public class Creationvoilier {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        JFrame frame = new CreationVoilier();
+        frame.pack();
+        frame.setVisible(true);
     }
     
 }

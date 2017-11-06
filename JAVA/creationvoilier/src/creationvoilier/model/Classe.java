@@ -55,6 +55,13 @@ public class Classe {
         this.nom = nom;
         this.coeff = coeff;
         this.serie = serie;
+        
+        
+    }
+
+    @Override
+    public String toString() {
+        return  nom ;
     }
     
 }

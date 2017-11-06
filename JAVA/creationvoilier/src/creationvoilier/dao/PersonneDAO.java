@@ -17,11 +17,12 @@ import java.sql.Statement;
  * @author david
  */
 public class PersonneDAO {
-    public static void create(Personne personne) throws SQLException{
+    public static int create(Personne personne) throws SQLException{
         Connection c=DBConnect.getConnection();
        PreparedStatement stm; 
+       int personneId;
        
-       stm=c.prepareStatement("INSERT INTO personne (personne_prenom,personne_nom,personne_email,personne_mdp,personne_addresse1,personne_addresse2,personne_ville,personne_pays,personne_langue,personne_tel) VALUE(?,?,?,?,?,?,?,?,?,?)");
+       stm=c.prepareStatement("INSERT INTO personne (personne_prenom,personne_nom,personne_email,personne_mdp,personne_addresse1,personne_addresse2,personne_ville,personne_pays,personne_langue,personne_tel) VALUE(?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
        stm.setString(1, personne.getPrenom());
        stm.setString(2, personne.getNom());
        stm.setString(3, personne.getEmail());
@@ -32,9 +33,15 @@ public class PersonneDAO {
        stm.setString(8, personne.getPays());
        stm.setString(9, personne.getLangue());
        stm.setString(10, personne.getTel());
-       stm.execute();
+       stm.executeUpdate();
+       ResultSet rs = stm.getGeneratedKeys();
+       if(rs.next()){
+            personneId=rs.getInt(1);
+            return personneId;
+       }
        stm.close();
-        
+       
+        return -1;
     }
     
     public static Personne findOneById(int id) throws SQLException{
@@ -43,7 +50,7 @@ public class PersonneDAO {
       Statement stm;
       stm=c.createStatement();
       
-      String sql ="SELECT * FROM personne WHERE personne_id"+id;
+      String sql ="SELECT * FROM personne WHERE personne_id="+id;
       ResultSet rs =stm.executeQuery(sql);
       
       if(rs.next()){

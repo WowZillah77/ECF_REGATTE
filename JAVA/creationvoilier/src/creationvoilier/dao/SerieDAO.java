@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,37 +20,47 @@ import java.util.ArrayList;
  */
 public class SerieDAO {
     
-    public static ArrayList<Serie> findAll() throws SQLException{
-        ArrayList<Serie>series = new ArrayList<>();
-        Connection c= DBConnect.getConnection();
-        Statement stm;
-        String sql ="SELECT * FROM serie";
-        stm= c.createStatement();
-        ResultSet rs = stm.executeQuery(sql);
-        
-        while(rs.next()){
-            int id =rs.getInt("serie_id");
-            String nom =rs.getString("serie_nom");
-            Serie serie = new Serie(id,nom);
-            series.add(serie);
+    public static ArrayList<Serie> findAll() {
+        try {
+            ArrayList<Serie>series = new ArrayList<>();
+            Connection c= DBConnect.getConnection();
+            Statement stm;
+            String sql ="SELECT * FROM serie";
+            stm= c.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+            
+            while(rs.next()){
+                int id =rs.getInt("serie_id");
+                String nom =rs.getString("serie_nom");
+                Serie serie = new Serie(id,nom);
+                series.add(serie);
+            }
+            
+            return series;
+        } catch (SQLException ex) {
+            Logger.getLogger(SerieDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return series;
+        return null;
     }
     
-    public static Serie findOnebyId(int id) throws SQLException{
-        Serie serie = null;
-        Connection c= DBConnect.getConnection();
-        Statement stm;
-        stm = c.createStatement();
-        String sql ="SELECT * FROM serie WHERE serie_id="+id;
-        ResultSet rs=stm.executeQuery(sql);
-        if(rs.next()){
-            String nom =rs.getString("serie_nom");
-            serie = new Serie(id,nom);
-        
+    public static Serie findOnebyId(int id) {
+        try {
+            Serie serie = null;
+            Connection c= DBConnect.getConnection();
+            Statement stm;
+            stm = c.createStatement();
+            String sql ="SELECT * FROM serie WHERE serie_id="+id;
+            ResultSet rs=stm.executeQuery(sql);
+            if(rs.next()){
+                String nom =rs.getString("serie_nom");
+                serie = new Serie(id,nom);
+                
+            }
+            rs.close();
+            return serie;
+        } catch (SQLException ex) {
+            Logger.getLogger(SerieDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        rs.close();
-        return serie;
+        return null;
     }
 }

@@ -28,6 +28,9 @@ public class Proprietaire extends Personne {
         this.id = id;
     }
 
+    
+    
+
     public Club getClub() {
         return club;
     }
@@ -35,5 +38,12 @@ public class Proprietaire extends Personne {
     public void setClub(Club club) {
         this.club = club;
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    
 
 }

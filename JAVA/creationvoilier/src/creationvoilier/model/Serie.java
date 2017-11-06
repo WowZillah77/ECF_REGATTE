@@ -22,6 +22,11 @@ public class Serie {
         return serie_id;
     }
 
+    @Override
+    public String toString() {
+        return  nom;
+    }
+
     public void setSerie_id(int serie_id) {
         this.serie_id = serie_id;
     }

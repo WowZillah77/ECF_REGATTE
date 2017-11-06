@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,21 +20,26 @@ import java.util.ArrayList;
  */
 public class ClubDAO {
     
-    public static ArrayList<Club> findAll() throws SQLException{
-       ArrayList<Club> clubs = new ArrayList<>();
-       
-       Connection c = DBConnect.getConnection();
-       Statement stm;
-       stm=c.createStatement();
-       String sql ="SELECT * FROM club";
-       ResultSet rs = stm.executeQuery(sql);
-       while(rs.next()){
-        int id = rs.getInt("club_id");
-       String nom = rs.getString("club_nom");
-       Club club = new Club(id,nom);
-       clubs.add(club);
-    }
-        return clubs;
+    public static ArrayList<Club> findAll() {
+        try {
+            ArrayList<Club> clubs = new ArrayList<>();
+            
+            Connection c = DBConnect.getConnection();
+            Statement stm;
+            stm=c.createStatement();
+            String sql ="SELECT * FROM club";
+            ResultSet rs = stm.executeQuery(sql);
+            while(rs.next()){
+                int id = rs.getInt("club_id");
+                String nom = rs.getString("club_nom");
+                Club club = new Club(id,nom);
+                clubs.add(club);
+            }
+            return clubs;
+        } catch (SQLException ex) {
+            Logger.getLogger(ClubDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     public static Club findOneById(int id) throws SQLException{

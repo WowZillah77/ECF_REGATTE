@@ -36,7 +36,7 @@ public class Personne {
         this.tel = tel;
     }
 
-    public int getId() {
+    public int getPersonneId() {
         return personne_id;
     }
 
@@ -76,7 +76,7 @@ public class Personne {
         this.mdp = mdp;
     }
 
-    public String getAddresse1() {
+   public String getAddresse1() {
         return addresse1;
     }
 
@@ -125,5 +125,10 @@ public class Personne {
     }
 
     public Personne() {
+    }
+
+    @Override
+    public String toString() {
+        return prenom + " " + nom ;
     }
 }
